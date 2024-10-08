@@ -1,29 +1,31 @@
-name: Push commit
+name: Commit CI
 
 on:
-    push:
-        branches:
-            - '*'
-jobs:
-    notify-commit:
-        runs-on: ubuntu-latest
-        steps:
-            - name: Telegram Message Notify
-              uses: appleboy/telegram-action@master
-              with:
-                to: ${{ secrets.TELEGRAM_CHAT_ID }}
-                token: ${{ secrets.TELEGRAM_TOKEN }}
-                format: markdown
-                message: |
-                    Repository:
-                        ${{ github.repository }} [links] https://github.com/${{ github.repository }}
-                    Branch:
-                        ${{ github.ref }}
-                    Actor:
-                        ${{ github.actor }}
-                    Commit:
-                        https://github.com/${{github.repository}}/commit/${{github.sha}}
-                    Message:
-                        ${{github.event.commits[0].message}}
+  push:
+    branches:
+      - '*'
+  pull_request:
+    branches:
+      - '*'
 
-        
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: send telegram message on push or pull
+        uses: appleboy/telegram-action@master
+        with:
+          to: ${{ secrets.TELEGRAM_TO }}
+          token: ${{secrets.TELEGRAM_TOKEN}}
+          format: markdown
+          message: |
+            *Repository:*
+            ${{ github.repository }} [link](https://github.com/${{ github.repository }})
+            *Branch:*
+            ${{ github.ref_name }}
+            *Actor:*
+            ${{ github.actor }}
+            *Commit:*
+            https://github.com/${{ github.repository }}/commit/${{github.sha}}
+            *Message:*
+            Action: ${{ github.event_name }} - Commit: ${{ github.event.commits[0].message }}
