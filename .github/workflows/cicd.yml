@@ -30,7 +30,7 @@ jobs:
         steps:
             - name: deploy source
               run: |
-                  cd ${{ env.SOURCE_FOLDER }}
+                  cd ${{ env.SOURCE_FOLDER }}/${{ github.ref_name }}
                   git pull
                   go get .
                   go get -u
