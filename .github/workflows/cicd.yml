@@ -28,6 +28,7 @@ jobs:
 
     branch_deploy:
         runs-on: self-hosted
+        needs: [branch_build_test]
         steps:
             - name: deploy source
               run: |
