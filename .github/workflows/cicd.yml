@@ -27,7 +27,7 @@ jobs:
               run: go test -v ./...
 
     branch_deploy:
-        runs-on: vps-07b73830
+        runs-on: besanh-dev
         needs: [branch_build_test]
         steps:
             - name: deploy source
