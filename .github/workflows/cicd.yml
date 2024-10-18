@@ -27,7 +27,7 @@ jobs:
               run: go test -v ./...
 
     branch_deploy:
-        runs-on: self-hosted
+        runs-on: besanh
         needs: [branch_build_test]
         steps:
             - name: deploy source
